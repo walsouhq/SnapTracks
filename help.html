@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aide - SnapTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* STYLES SPÉCIFIQUES HELP */
+        .help-container {
+            max-width: 1000px;
+            margin: 100px auto 50px;
+            padding: 2rem;
+        }
+
+        .search-demo {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            margin: 3rem 0;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        .demo-search-box {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .demo-search-box input {
+            padding: 15px 20px;
+            width: 400px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .demo-search-box button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            background: linear-gradient(45deg, #8a2be2, #6a1cb9);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .results-preview {
+            background: rgba(20, 20, 20, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem auto;
+            max-width: 600px;
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            animation: glow 2s infinite alternate;
+        }
+
+        .blurred-text {
+            filter: blur(5px);
+            color: transparent;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+            user-select: none;
+        }
+
+        .unlock-message {
+            background: linear-gradient(45deg, #8a2be2, #6a1cb9);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .faq-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .faq-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.2);
+        }
+
+        .faq-card h3 {
+            color: #8a2be2;
+            margin-bottom: 1rem;
+        }
+
+        .faq-card p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+            }
+            to {
+                box-shadow: 0 0 40px rgba(138, 43, 226, 0.6);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .feature-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #8a2be2, #6a1cb9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <!-- TOP BAR -->
+    <nav class="top-bar">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-ghost"></i>
+                <span>SnapTrack</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                <a href="payment.html"><i class="fas fa-crown"></i> Premium</a>
+                <a href="help.html" class="active"><i class="fas fa-question-circle"></i> Aide</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="help-container">
+        <h1 class="glitch-title">Centre d'Aide 🆘</h1>
+        <p style="text-align: center; color: #b0b0b0; margin-bottom: 3rem;">
+            Tout ce que vous devez savoir sur SnapTrack et son fonctionnement.
+        </p>
+
+        <!-- DEMO DE RECHERCHE -->
+        <div class="search-demo">
+            <h2><i class="fas fa-search"></i> Essayez SnapTrack Maintenant</h2>
+            <p>Entrez un nom d'utilisateur Snapchat pour voir la démonstration</p>
+            
+            <div class="demo-search-box">
+                <input type="text" id="demoSearch" placeholder="Entrez un nom d'utilisateur...">
+                <button onclick="showDemoResults()">
+                    <i class="fas fa-search"></i> Rechercher
+                </button>
+            </div>
+
+            <!-- RÉSULTATS FLoutÉS -->
+            <div id="demoResults" style="display: none;">
+                <div class="results-preview">
+                    <h3>📱 Profil: <span class="blurred-text">snap_demon123</span></h3>
+                    <p>📍 <strong>Localisation:</strong> <span class="blurred-text">48.8566° N, 2.3522° E (Paris, FR)</span></p>
+                    <p>👥 <strong>Amis:</strong> <span class="blurred-text">187</span></p>
+                    <p>👨‍🦰 <strong>Amis Masculins:</strong> <span class="blurred-text">102</span></p>
+                    <p>👩‍🦰 <strong>Amis Féminins:</strong> <span class="blurred-text">85</span></p>
+                    <p>📸 <strong>Photos:</strong> <span class="blurred-text">43</span></p>
+                    <p>🎥 <strong>Vidéos:</strong> <span class="blurred-text">12</span></p>
+                    <p>⏰ <strong>Dernière connexion:</strong> <span class="blurred-text">Il y a 5 minutes</span></p>
+                </div>
+
+                <div class="unlock-message">
+                    <h3><i class="fas fa-lock-open"></i> Accès Complet Requis</h3>
+                    <p>Les données sont floutées. Activez votre licence gratuite pour déverrouiller toutes les informations!</p>
+                    <button onclick="redirectToLicense()" style="margin-top: 1rem;">
+                        <i class="fas fa-gift"></i> Obtenir ma licence gratuite
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMMENT ÇA MARCHE -->
+        <h2 style="text-align: center; margin: 4rem 0 2rem;"><i class="fas fa-cogs"></i> Comment SnapTrack Fonctionne</h2>
+        
+        <div class="feature-steps">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Recherche</h3>
+                <p>Entrez le nom d'utilisateur Snapchat que vous souhaitez tracker</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Analyse</h3>
+                <p>Notre système scanne et récupère toutes les données disponibles</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Résultats</h3>
+                <p>Accédez à la localisation, amis, médias et bien plus</p>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <h2 style="text-align: center; margin: 4rem 0 2rem;"><i class="fas fa-question-circle"></i> Questions Fréquentes</h2>
+        
+        <div class="faq-grid">
+            <div class="faq-card">
+                <h3>🤔 SnapTrack est-il légal?</h3>
+                <p>Absolument! SnapTrack utilise des API officielles et respecte toutes les lois sur la protection des données. Conforme RGPD.</p>
+            </div>
+            <div class="faq-card">
+                <h3>🔒 Mes données sont-elles sécurisées?</h3>
+                <p>Totalement! Nous utilisons un chiffrement SSL de niveau militaire. Vos données ne sont jamais partagées.</p>
+            </div>
+            <div class="faq-card">
+                <h3>📱 Comment ça fonctionne?</h3>
+                <p>Notre technologie brevetée analyse les métadonnées publiques et les patterns de connexion pour fournir des résultats précis.</p>
+            </div>
+            <div class="faq-card">
+                <h3>⏰ Temps de traitement?</h3>
+                <p>Les résultats sont instantanés! Dès que vous lancez une recherche, nos serveurs traitent les données en temps réel.</p>
+            </div>
+            <div class="faq-card">
+                <h3>💸 Pourquoi payer?</h3>
+                <p>Les serveurs et la technologie ont un coût. L'essai gratuit de 2 mois vous permet de tout tester sans engagement!</p>
+            </div>
+            <div class="faq-card">
+                <h3>📞 Support technique?</h3>
+                <p>Notre équipe est disponible 24/7 par chat et email pour vous aider avec toutes vos questions.</p>
+            </div>
+        </div>
+
+        <!-- CALL TO ACTION FINAL -->
+        <div class="unlock-message" style="margin: 4rem 0;">
+            <h2><i class="fas fa-rocket"></i> Prêt à Commencer?</h2>
+            <p>Rejoignez des milliers d'utilisateurs satisfaits et découvrez la puissance de SnapTrack</p>
+            <button onclick="redirectToLicense()" style="margin-top: 1rem; padding: 15px 30px;">
+                <i class="fas fa-gift"></i> Commencer mon essai gratuit maintenant
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#8a2be2" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#8a2be2",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        function showDemoResults() {
+            const searchValue = document.getElementById('demoSearch').value;
+            if (searchValue.trim() === '') {
+                alert('Veuillez entrer un nom d\'utilisateur Snapchat');
+                return;
+            }
+
+            document.getElementById('demoResults').style.display = 'block';
+            document.getElementById('demoResults').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function redirectToLicense() {
+            window.location.href = "payment.html";
+        }
+
+        // Animation pour la recherche
+        document.getElementById('demoSearch').addEventListener('focus', function() {
+            this.style.transform = 'scale(1.02)';
+            this.style.boxShadow = '0 0 20px rgba(138, 43, 226, 0.5)';
+        });
+
+        document.getElementById('demoSearch').addEventListener('blur', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = 'none';
+        });
+
+        // Effet de typewriter pour le placeholder
+        const demoSearch = document.getElementById('demoSearch');
+        const phrases = [
+            "snap_demon123",
+            "sarah.snap",
+            "marc_tiktok",
+            "laura.2024"
+        ];
+        let currentPhrase = 0;
+        let currentLetter = 0;
+        let isDeleting = false;
+
+        function typeWriter() {
+            const fullPhrase = phrases[currentPhrase];
+
+            if (isDeleting) {
+                demoSearch.placeholder = fullPhrase.substring(0, currentLetter - 1);
+                currentLetter--;
+            } else {
+                demoSearch.placeholder = fullPhrase.substring(0, currentLetter + 1);
+                currentLetter++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && currentLetter === fullPhrase.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && currentLetter === 0) {
+                isDeleting = false;
+                currentPhrase = (currentPhrase + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeWriter, typeSpeed);
+        }
+
+        typeWriter();
+    </script>
+</body>
+</html>
