@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats - SnapTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .profile-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            margin: 2rem 0;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .blurred-text {
+            filter: blur(5px);
+            color: transparent;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+            user-select: none;
+        }
+
+        .unlock-message {
+            background: linear-gradient(45deg, #8a2be2, #6a1cb9);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem auto;
+            text-align: center;
+            max-width: 600px;
+            animation: pulse 2s infinite;
+        }
+
+        .download-section {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .download-section button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #8a2be2, #6a1cb9);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .download-section button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+        }
+
+        .note {
+            color: #b0b0b0;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .search-again {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .search-again button {
+            padding: 10px 20px;
+            border: 1px solid #8a2be2;
+            border-radius: 50px;
+            background: transparent;
+            color: #8a2be2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-again button:hover {
+            background: #8a2be2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <!-- TOP BAR -->
+    <nav class="top-bar">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-ghost"></i>
+                <span>SnapTrack</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                <a href="payment.html"><i class="fas fa-crown"></i> Licences</a>
+                <a href="help.html"><i class="fas fa-question-circle"></i> Aide</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="glitch-title">Résultats de Recherche 🔍</h1>
+        
+        <div class="profile-info">
+            <h3>📱 Profil: <span id="username" class="blurred-text">snap_demon123</span></h3>
+            <p>📍 <strong>Localisation:</strong> <span class="blurred-text">48.8566° N, 2.3522° E (Paris, FR)</span></p>
+            <p>👥 <strong>Amis:</strong> <span class="blurred-text">187</span></p>
+            <p>👨‍🦰 <strong>Amis Masculins:</strong> <span class="blurred-text">102</span></p>
+            <p>👩‍🦰 <strong>Amis Féminins:</strong> <span class="blurred-text">85</span></p>
+            <p>📸 <strong>Photos partagées:</strong> <span class="blurred-text">43</span></p>
+            <p>🎥 <strong>Vidéos partagées:</strong> <span class="blurred-text">12</span></p>
+            <p>⏰ <strong>Dernière connexion:</strong> <span class="blurred-text">Il y a 5 minutes</span></p>
+            <p>📱 <strong>Appareil:</strong> <span class="blurred-text">iPhone 13 Pro</span></p>
+            <p>🌐 <strong>Dernière IP:</strong> <span class="blurred-text">192.168.1.1</span></p>
+        </div>
+
+        <div class="unlock-message">
+            <h3><i class="fas fa-lock"></i> Accès Complet Requis</h3>
+            <p>Les données sont floutées. Activez votre licence pour déverrouiller toutes les informations!</p>
+            <button onclick="redirectToLicense()" style="margin-top: 1rem;">
+                <i class="fas fa-gift"></i> Obtenir ma licence maintenant
+            </button>
+        </div>
+
+        <div class="download-section">
+            <button onclick="requestDownload()">
+                <i class="fas fa-download"></i> Télécharger le Rapport Complet
+            </button>
+            <p class="note">(Nécessite une licence active)</p>
+        </div>
+
+        <div class="search-again">
+            <button onclick="goBackToSearch()">
+                <i class="fas fa-arrow-left"></i> Effectuer une nouvelle recherche
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#8a2be2" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#8a2be2",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
+        // Afficher le username recherché
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('searchedUsername') || 'snap_demon123';
+            document.getElementById('username').textContent = username;
+        });
+
+        function redirectToLicense() {
+            window.location.href = "payment.html";
+        }
+
+        function requestDownload() {
+            alert("Votre licence gratuite ne permet pas le téléchargement. Veuillez activer une licence premium.");
+            redirectToLicense();
+        }
+
+        function goBackToSearch() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
