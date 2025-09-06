@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapTrack - Snapchat Tracker Officiel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <nav class="top-bar">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-ghost"></i>
+                <span>SnapTrack</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="active"><i class="fas fa-home"></i> Accueil</a>
+                <a href="payment.html"><i class="fas fa-crown"></i> Licences</a>
+                <a href="help.html"><i class="fas fa-question-circle"></i> Aide</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="glitch-title">SnapTrack 🔍</h1>
+        <p class="tagline">Accédez aux informations Snapchat de n'importe qui.</p>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Entrez un nom d'utilisateur Snapchat...">
+            <button onclick="performSearch()">
+                <i class="fas fa-search"></i> Rechercher
+            </button>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Localisation Precise</h3>
+                <p>Position exacte en temps réel</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>Réseau Social</h3>
+                <p>Amis, followers et abonnements</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-photo-video"></i>
+                <h3>Médias</h3>
+                <p>Photos et vidéos partagées</p>
+            </div>
+        </div>
+
+        <p class="disclaimer">© 2025 SnapTrack. Conforme au RGPD. Vos données sont sécurisées.</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        function performSearch() {
+            const username = document.getElementById('searchInput').value.trim();
+            if (username === '') {
+                alert('Veuillez entrer un nom d\'utilisateur Snapchat');
+                return;
+            }
+            
+            localStorage.setItem('searchedUsername', username);
+            window.location.href = 'results.html';
+        }
+
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#8a2be2" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#8a2be2",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            }
+        });
+    </script>
+</body>
+</html>
